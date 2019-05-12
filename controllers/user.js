@@ -78,7 +78,10 @@ exports.login = async (req, res, next) => {
                 id: usr._id,
                 username: usr.username,
                 name: usr.name,
-                token: `Bearer ${token}`
+                token: `Bearer ${token}`,
+                jurusan: usr.jurusan,
+                prodi: usr.prodi,
+                semester: usr.semester
             });
         }
         return res.status(401).json({
