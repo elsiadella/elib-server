@@ -67,7 +67,10 @@ exports.login = async (req, res, next) => {
         } else if (result) {
             const token = jwt.sign({
                 id: usr._id,
-                username: usr.username
+                username: usr.username,
+                jurusan: usr.jurusan,
+                prodi: usr.prodi,
+                semester: usr.semester
             }, 'secret');
             res.setHeader('Authorization', 'Bearer ' + token);
             return res.status(201).json({
