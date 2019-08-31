@@ -2,14 +2,21 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 
 const Book = require('../models/book');
+const Pinjaman = require('../models/pinjaman');
 
 const environment = require('../env.json');
 
 exports.getBooks = (req, res, next) => {
     Book.find()
         .exec()
-        .then(result => {
-            return res.status(200).json(result);
+        .then(async result => {
+            const pinjaman = await Pinjaman.find().populate('user buku');
+            const book = result.filter(el => {
+                return pinjaman.filter(elPinjaman => {
+                    return el._id === elPinjaman.buku._id
+                }).length === 0;
+            });
+            return res.status(200).json(book);
         })
         .catch(error => {
             return res.status(500).json({
