@@ -67,14 +67,9 @@ exports.createPeminjaman = (req, res, next) => {
 
 exports.deletePeminjaman = async (req, res, next) => {
     const id = req.params.id;
-    const admin = req.user.username;
-    if(admin !== 'admin') {
-        return res.status(401).json({
-            message: 'Anda bukan admin'
-        });
-    }
     const eve = await Pinjaman.findOne({
-        _id: id
+        _id: id,
+        user: mongoose.mongo.ObjectId(req.user.id)
     });
     if (!eve) {
         return res.status(404).json({
