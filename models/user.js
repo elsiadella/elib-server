@@ -22,8 +22,7 @@ const user = mongoose.Schema({
         required: true
     },
     semester: {
-        type: String,
-        required: true
+        type: String
     },
 });
 
